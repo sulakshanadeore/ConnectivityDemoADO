@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
+using Microsoft.Identity.Client;
 namespace ConnectivityDemoADO
 {
     internal class DepartmentOperations
@@ -21,6 +22,42 @@ namespace ConnectivityDemoADO
             IConfiguration config=new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).
             AddJsonFile("appsettings.json").Build();
             cnstring = config.GetConnectionString("NorthwindCnString");
+        }
+
+        public Dept FindDept(int dno)
+        {
+            string s = "select * from Dept where Deptno=@dno";
+            SqlConnection cn = new SqlConnection(cnstring);
+            SqlCommand cmd=new SqlCommand(s, cn);
+            cn.Open();
+            Dept obj = new Dept();
+            try
+            {
+                cmd.Parameters.AddWithValue("@dno", dno);
+                SqlDataReader dr=cmd.ExecuteReader();//select --executereader
+               if (dr.HasRows)
+                {
+                    //if finding the record by pk then only one  row
+                    dr.Read();//one read invocation will read one row
+                    obj.Deptno=Convert.ToInt32(dr["Deptno"]);
+                    obj.Dname = dr["Dname"].ToString();
+                    obj.Loc = dr["Loc"].ToString();
+
+               }
+           }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                cmd.Dispose();
+                cn.Close();
+                cn.Dispose();
+
+            }
+            return obj;
+
         }
 
         public bool EditDept(int deptno,Dept d)

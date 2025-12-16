@@ -6,7 +6,7 @@ internal class Program
     {
 
         Console.WriteLine("Menu");
-        Console.WriteLine("1.Insert \n2.Update \n8.Exit");
+        Console.WriteLine("1.Insert \n2.Update 4.Find \n8.Exit");
         int userchoice = Convert.ToInt32(Console.ReadLine());
         DepartmentOperations operations = new DepartmentOperations();
         Dept d = new Dept();
@@ -55,6 +55,29 @@ internal class Program
                 }
 
                 
+                break;
+            case 4:
+                Console.WriteLine("Enter deptno");
+                 deptno=Convert.ToInt32(Console.ReadLine());
+                try
+                {
+                    d = operations.FindDept(deptno);
+                    if (d.Deptno != 0)
+                    {
+                        Console.WriteLine($"Deptno={d.Deptno} | DeptName={d.Dname} | Location={d.Loc}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("This deptno doesn't exists...");
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
+                }
+              
+
                 break;
             default:
                 break;
