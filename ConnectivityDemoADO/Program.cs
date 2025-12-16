@@ -4,6 +4,7 @@ internal class Program
 {
     private static void Main(string[] args)
     {
+
         Console.WriteLine("Menu");
         Console.WriteLine("1.Insert \n8.Exit");
         int userchoice = Convert.ToInt32(Console.ReadLine());

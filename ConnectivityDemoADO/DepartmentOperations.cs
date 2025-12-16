@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
-
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.Json;
 namespace ConnectivityDemoADO
 {
     internal class DepartmentOperations
@@ -13,11 +14,19 @@ namespace ConnectivityDemoADO
         //Operations-Method--Insert,Update,Delete,Find,ListofDepts
         //insert,update,delete,select -where,select * from dept
 
+
+        string cnstring = "";
+        public DepartmentOperations()
+        {
+            IConfiguration config=new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).
+            AddJsonFile("appsettings.json").Build();
+            cnstring = config.GetConnectionString("NorthwindCnString");
+        }
         public bool AddDept(Dept d)
         {
             //@--means parameters
             string s = "insert into Dept values(@deptname,@location)";
-            string cnstring = "Data Source=DESKTOP-BO7RKUV;Initial Catalog=Northwind;User ID=sa;Password=User$2025;Trust Server Certificate=True";
+            //string cnstring = "Data Source=DESKTOP-BO7RKUV;Initial Catalog=Northwind;User ID=sa;Password=User$2025;Trust Server Certificate=True";
             SqlConnection cn = new SqlConnection(cnstring);
             SqlCommand cmd = new SqlCommand(s, cn);
             cn.Open();

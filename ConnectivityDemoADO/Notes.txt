@@ -11,6 +11,11 @@ Main Components:
 3) SqlDataReader
 
 
+For appsettings.json file to work install the following:
+1)Install-Package Microsoft.Extensions.Configuration
+2)Install-Package Microsoft.Extensions.Configuration.Json
+
+
 ----------------------------------
 
 Disconnected Architecture----> 
