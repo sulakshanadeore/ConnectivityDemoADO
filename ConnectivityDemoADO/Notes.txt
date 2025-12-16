@@ -1,0 +1,37 @@
+﻿DB server connectivity is always required by the app its called Connected Architecture.
+All real time apps---Life and Property.
+Everything related to finance,shares are realtime apps.
+
+Real Time Apps---->Connected Architecture.
+
+
+Main Components:
+1)SqlConnection
+2) SqlCommand
+3) SqlDataReader
+
+
+----------------------------------
+
+Disconnected Architecture----> 
+The app connects to the database server on a requirement basis.
+HR App---->Disconnected Architecture
+
+Scalable,enterprise, and web apps
+
+1) Data is fetched from the db
+2) Connection is closed immediately
+3) You work with the data offline
+4) Changes are sent back later to the db.
+
+
+Scalable----Hundreds and thousands of users access the data simultaneously .
+Without remaining connected to the db server, u can insert,update and delete and then send all these updates to the server.
+
+Main Components:
+
+1) DataSet
+2) DataTable
+3) DataAdapter
+4) Data Relation
+5) SqlConnection
