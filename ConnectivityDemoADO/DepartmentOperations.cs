@@ -135,8 +135,6 @@ namespace ConnectivityDemoADO
             {
                 cmd.Parameters.AddWithValue("@deptname", d.Dname);
                 cmd.Parameters.AddWithValue("@location", d.Loc);
-
-
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex)

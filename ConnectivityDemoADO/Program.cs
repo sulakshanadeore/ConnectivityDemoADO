@@ -81,9 +81,12 @@ internal class Program
             case 5:
                 List<Dept> depts = operations.ShowDepts();
                 Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine(new string('-', 70));
                 Console.WriteLine($"{"Deptno",-10}    | {"DeptName",-30}    | {"Location",-30}");
                 Console.WriteLine(new string('-', 70));
+                Console.ForegroundColor = ConsoleColor.White;
+
                 foreach (var item in depts)
                 {
                     Console.WriteLine($"{item.Deptno,-10}    | {item.Dname,-30}    | {item.Loc,-30}");
