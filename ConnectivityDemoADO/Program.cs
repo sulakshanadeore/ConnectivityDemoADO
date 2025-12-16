@@ -1,4 +1,6 @@
 ﻿using ConnectivityDemoADO;
+using System.Collections.Concurrent;
+using System.Numerics;
 
 internal class Program
 {
@@ -39,9 +41,10 @@ internal class Program
                 empobj.City = Console.ReadLine();
                 Console.WriteLine("Enter Birthdate Pls enter in format mm/dd/yyyy");
                 empobj.BirthDate = Convert.ToDateTime(Console.ReadLine());
+                bool status = false;
                 try
                 {
-                    bool status = empoperations.AddEmp(empobj);
+                     status = empoperations.AddEmp(empobj);
                     if (status)
                     {
                         Console.WriteLine("Employee added successfully..");
@@ -56,10 +59,53 @@ internal class Program
 
            
                 break;
-            case 2: break;
-            case 3: break;
-            case 4: break;
-            case 5: break;
+            case 2:
+                Console.WriteLine("Enter empoyeeid to find and update");
+                empobj.EmployeeId= Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Enter First Name");
+                empobj.FirstName = Console.ReadLine();
+                Console.WriteLine("Enter City");
+                empobj.City = Console.ReadLine();
+                Console.WriteLine("Enter birthdate mm/dd/yyyy format");
+                empobj.BirthDate = Convert.ToDateTime(Console.ReadLine());
+
+                bool updateStatus=empoperations.UpdateEmp(empobj.EmployeeId, empobj);
+                if (updateStatus) {
+                    Console.WriteLine("Updated Successfully....");
+                }
+
+                break;
+            case 3:
+                Console.WriteLine("Enter the Employeeid to Delete");
+                int empid=Convert.ToInt32(Console.ReadLine());
+                bool deletestatus=empoperations.DeleteEmp(empid);
+                if (deletestatus)
+                {
+                    Console.WriteLine("Record deleted successfully...");
+                }
+                break;
+            case 4:
+                Console.WriteLine("Enter employeeid to find");
+                 empid = Convert.ToInt32(Console.ReadLine());
+                empobj=empoperations.FindEmployee(empid);
+                if (empobj.EmployeeId != 0)
+                {
+                    Console.WriteLine(empobj.EmployeeId);
+                    Console.WriteLine(empobj.FirstName);
+                    Console.WriteLine(empobj.City);
+                    Console.WriteLine(empobj.BirthDate);
+                }
+                else
+                    Console.WriteLine("Check the employee id");
+                    break;
+            case 5:
+                List<Emp> emplist=empoperations.ShowEmpList();
+                foreach (var item in emplist)
+                {
+                    Console.WriteLine(item.EmployeeId + "  "+ item.FirstName + " "+ item.City + "  "+ item.BirthDate);
+                }
+
+                break;
             case 8: break;
         }
 

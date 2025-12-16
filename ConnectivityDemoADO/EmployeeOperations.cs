@@ -52,13 +52,84 @@ namespace ConnectivityDemoADO
 
         
         }
-        //public bool DeleteEmp(int empid) { }
+        public bool DeleteEmp(int empid) {
+            bool status = false;
+            DataRow found = ds.Tables["Emp"].Rows.Find(empid);
+            try
+            {
+                if (found != null)
+                {
+                    found.Delete();
 
-        //public bool UpdateEmp(int empid,Emp emp) { }
+                    SqlCommandBuilder builder = new SqlCommandBuilder(da);
+                    da.Update(ds, "Emp");
+                    status = true;
+                }
+            }
+            catch (Exception)
+            { 
+                throw; 
+            }
+            return status;   
+    
 
-        //public List<Emp> ShowEmpList() { }
+        }
 
-        //public Emp FindEmployee(int empid) { }
+        public bool UpdateEmp(int empid,Emp emp) {
+
+            bool status = false;
+            DataRow found = ds.Tables["Emp"].Rows.Find(empid);
+            try
+            {
+                if (found != null)
+                {
+                    found["FirstName"] = emp.FirstName;
+                    found["City"] = emp.City;
+                    found["BirthDate"] = emp.BirthDate;
+
+                    SqlCommandBuilder builder = new SqlCommandBuilder(da);
+                    da.Update(ds, "Emp");
+                    status = true;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return status;
+
+
+        }
+
+        public List<Emp> ShowEmpList() {
+            DataTable dt=ds.Tables["Emp"];
+            List<Emp> AllEmpdata = dt.AsEnumerable().Select(row=>new Emp
+                {
+            EmployeeId=row.Field<int>("EmployeeId"),
+                FirstName = row.Field<string>("FirstName"),
+                City=row.Field<string>("City"),
+                BirthDate=row.Field<DateTime>("BirthDate")
+            }).ToList();
+            return AllEmpdata;
+        
+        }
+
+        public Emp FindEmployee(int empid) 
+        {
+            DataRow found = ds.Tables["Emp"].Rows.Find(empid);
+            Emp emp = new Emp();
+            if (found != null)
+            {
+               
+                emp.EmployeeId = Convert.ToInt32(found["EmployeeId"]);
+                emp.FirstName = found["FirstName"].ToString();
+                emp.City = found["City"].ToString();
+                emp.BirthDate = Convert.ToDateTime(found["BirthDate"]);
+               
+            }
+            return emp;
+
+        }
 
     }
 }
