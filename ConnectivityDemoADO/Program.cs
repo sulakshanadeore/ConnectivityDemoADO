@@ -6,7 +6,8 @@ internal class Program
     {
 
         Console.WriteLine("Menu");
-        Console.WriteLine("1.Insert \n2.Update 4.Find \n8.Exit");
+        Console.WriteLine("1.Insert \n2.Update \n4.Find  \n5.ShowList \n8.Exit");
+        Console.WriteLine("Enter choice between 1 to 5, 8 to Exit..");
         int userchoice = Convert.ToInt32(Console.ReadLine());
         DepartmentOperations operations = new DepartmentOperations();
         Dept d = new Dept();
@@ -28,12 +29,12 @@ internal class Program
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    
+
                 }
-                               
-                    break;
-                case 2:
-                
+
+                break;
+            case 2:
+
                 Console.WriteLine("Enter Deptno");
                 int deptno = Convert.ToInt32(Console.ReadLine());
                 Console.WriteLine("Enter Dept name");
@@ -54,11 +55,11 @@ internal class Program
                     Console.WriteLine(ex.Message);
                 }
 
-                
+
                 break;
             case 4:
                 Console.WriteLine("Enter deptno");
-                 deptno=Convert.ToInt32(Console.ReadLine());
+                deptno = Convert.ToInt32(Console.ReadLine());
                 try
                 {
                     d = operations.FindDept(deptno);
@@ -76,10 +77,22 @@ internal class Program
 
                     Console.WriteLine(ex.Message);
                 }
-              
-
                 break;
-            default:
+            case 5:
+                List<Dept> depts = operations.ShowDepts();
+                Console.WriteLine();
+                Console.WriteLine(new string('-', 70));
+                Console.WriteLine($"{"Deptno",-10}    | {"DeptName",-30}    | {"Location",-30}");
+                Console.WriteLine(new string('-', 70));
+                foreach (var item in depts)
+                {
+                    Console.WriteLine($"{item.Deptno,-10}    | {item.Dname,-30}    | {item.Loc,-30}");
+                }
+                break;
+
+
+            case 8:
+                Environment.Exit(1);
                 break;
         }
 

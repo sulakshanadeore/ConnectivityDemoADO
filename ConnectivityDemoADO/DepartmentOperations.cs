@@ -23,6 +23,40 @@ namespace ConnectivityDemoADO
             AddJsonFile("appsettings.json").Build();
             cnstring = config.GetConnectionString("NorthwindCnString");
         }
+        public List<Dept> ShowDepts()
+        {
+            string s = "select * from Dept";
+
+            SqlConnection cn=new SqlConnection(cnstring);
+            SqlCommand cmd = new SqlCommand(s, cn);
+            cn.Open();
+            List<Dept> deptlist = new List<Dept>();
+            try
+            {
+                SqlDataReader dr=cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        Dept obj = new Dept();
+                        obj.Deptno =Convert.ToInt32(dr["Deptno"]);
+                        obj.Dname = dr["Dname"].ToString();
+                        obj.Loc = dr["Loc"].ToString();
+                        deptlist.Add(obj);
+                    }
+                }
+
+            }
+            finally
+            {
+                cmd.Dispose();
+                cn.Close();
+                cn.Dispose();
+            }
+            return deptlist;
+        
+        
+        }
 
         public Dept FindDept(int dno)
         {
