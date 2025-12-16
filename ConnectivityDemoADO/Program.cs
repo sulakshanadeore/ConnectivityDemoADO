@@ -6,6 +6,69 @@ internal class Program
     {
 
         Console.WriteLine("Menu");
+        Console.WriteLine("1.Connected \n2. Disconnected");
+        int choice = Convert.ToInt32(Console.ReadLine());
+        switch (choice)
+        {
+            case 1:
+                ConnectedDemo();
+                break;
+            case 2:
+                DisconnectedDemo();
+                break;
+        }
+
+      
+
+    }
+
+    private static void DisconnectedDemo()
+    {
+        Console.WriteLine("------EmpMenu------");
+        Console.WriteLine("1.Insert \n2.Update \n3.Delete \n4.Find  \n5.ShowList \n8.Exit");
+        Console.WriteLine("Enter choice between 1 to 5, 8 to Exit..");
+        int userchoice = Convert.ToInt32(Console.ReadLine());
+        EmployeeOperations empoperations = new EmployeeOperations();
+        Emp empobj = new Emp();
+        switch (userchoice)
+        {
+            case 1:
+                Console.WriteLine("Enter First name");
+                empobj.FirstName = Console.ReadLine();
+                Console.WriteLine("Enter City");
+                empobj.City = Console.ReadLine();
+                Console.WriteLine("Enter Birthdate Pls enter in format mm/dd/yyyy");
+                empobj.BirthDate = Convert.ToDateTime(Console.ReadLine());
+                try
+                {
+                    bool status = empoperations.AddEmp(empobj);
+                    if (status)
+                    {
+                        Console.WriteLine("Employee added successfully..");
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
+                }
+
+
+           
+                break;
+            case 2: break;
+            case 3: break;
+            case 4: break;
+            case 5: break;
+            case 8: break;
+        }
+
+
+    }
+
+    private static void ConnectedDemo()
+    {
+        Console.WriteLine("---DeptMenu----");
         Console.WriteLine("1.Insert \n2.Update \n4.Find  \n5.ShowList \n8.Exit");
         Console.WriteLine("Enter choice between 1 to 5, 8 to Exit..");
         int userchoice = Convert.ToInt32(Console.ReadLine());
@@ -98,7 +161,5 @@ internal class Program
                 Environment.Exit(1);
                 break;
         }
-
-
     }
 }
