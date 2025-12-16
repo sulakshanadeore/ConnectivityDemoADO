@@ -6,13 +6,13 @@ internal class Program
     {
 
         Console.WriteLine("Menu");
-        Console.WriteLine("1.Insert \n8.Exit");
+        Console.WriteLine("1.Insert \n2.Update \n8.Exit");
         int userchoice = Convert.ToInt32(Console.ReadLine());
         DepartmentOperations operations = new DepartmentOperations();
+        Dept d = new Dept();
         switch (userchoice)
         {
             case 1:
-                Dept d = new Dept();
                 Console.WriteLine("Enter Dept Name");
                 d.Dname = Console.ReadLine();
                 Console.WriteLine("Enter Location");
@@ -32,6 +32,30 @@ internal class Program
                 }
                                
                     break;
+                case 2:
+                
+                Console.WriteLine("Enter Deptno");
+                int deptno = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Enter Dept name");
+                d.Dname = Console.ReadLine();
+                Console.WriteLine("Enter Location");
+                d.Loc = Console.ReadLine();
+                try
+                {
+                    bool status = operations.EditDept(deptno, d);
+                    if (status)
+                    {
+                        Console.WriteLine("Record updated Successfully...");
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
+                }
+
+                
+                break;
             default:
                 break;
         }

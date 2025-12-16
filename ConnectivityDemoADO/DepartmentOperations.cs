@@ -22,6 +22,35 @@ namespace ConnectivityDemoADO
             AddJsonFile("appsettings.json").Build();
             cnstring = config.GetConnectionString("NorthwindCnString");
         }
+
+        public bool EditDept(int deptno,Dept d)
+        {
+            string s = "update Dept set Dname=@deptname,Loc=@location where Deptno=@deptno";
+
+            SqlConnection cn=new SqlConnection(cnstring);
+            SqlCommand updatecmd=new SqlCommand(s, cn);
+            cn.Open();
+            try
+            {
+                updatecmd.Parameters.AddWithValue("@deptname", d.Dname);
+                updatecmd.Parameters.AddWithValue("@location", d.Loc);
+                updatecmd.Parameters.AddWithValue("@deptno", deptno);
+                updatecmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                 throw;
+            }
+            finally
+            {
+                updatecmd.Dispose();
+                cn.Close();
+                cn.Dispose();
+            }
+            return true;
+        }
+
+
         public bool AddDept(Dept d)
         {
             //@--means parameters
