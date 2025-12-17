@@ -40,3 +40,16 @@ Main Components:
 3) DataAdapter
 4) Data Relation
 5) SqlConnection
+-----------------------------------------------------
+
+
+1) Windows App:
+Create 2 forms: Dept      Emp
+              4 textbox    4 textboxes
+              1 listbox     1 listbox
+                  Buttons:I/U/D/F/S
+
+
+2) Class Library: Add all code of connected and discnnected along with the classes of the properties inlcuding the Operations Classes.
+
+Reference class library in windows app

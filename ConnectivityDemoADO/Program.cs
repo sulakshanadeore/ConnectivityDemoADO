@@ -27,7 +27,7 @@ internal class Program
     private static void DisconnectedDemo()
     {
         Console.WriteLine("------EmpMenu------");
-        Console.WriteLine("1.Insert \n2.Update \n3.Delete \n4.Find  \n5.ShowList \n8.Exit");
+        Console.WriteLine("1.Insert \n2.Update \n3.Delete \n4.Find  \n5.ShowList  \n8.Exit");
         Console.WriteLine("Enter choice between 1 to 5, 8 to Exit..");
         int userchoice = Convert.ToInt32(Console.ReadLine());
         EmployeeOperations empoperations = new EmployeeOperations();
@@ -115,7 +115,7 @@ internal class Program
     private static void ConnectedDemo()
     {
         Console.WriteLine("---DeptMenu----");
-        Console.WriteLine("1.Insert \n2.Update \n4.Find  \n5.ShowList \n8.Exit");
+        Console.WriteLine("1.Insert \n2.Update \n4.Find  \n5.ShowList \n6.OrderList of Customers \n8.Exit");
         Console.WriteLine("Enter choice between 1 to 5, 8 to Exit..");
         int userchoice = Convert.ToInt32(Console.ReadLine());
         DepartmentOperations operations = new DepartmentOperations();
@@ -201,7 +201,17 @@ internal class Program
                     Console.WriteLine($"{item.Deptno,-10}    | {item.Dname,-30}    | {item.Loc,-30}");
                 }
                 break;
+            case 6:
+                OrderDetailsOperations odo = new OrderDetailsOperations();
+                Console.WriteLine("Enter custid");
+                string customerid = Console.ReadLine();
+                List<OrderDetails> details=odo.ShowCustomerOrders(customerid);
+                foreach (var item in details)
+                {
+                    Console.WriteLine($"{item.Orderid} | {item.ORderDate}   |  {item.CustID} | {item.ProductID}   |  {item.Discount}");
+                }
 
+                break;
 
             case 8:
                 Environment.Exit(1);

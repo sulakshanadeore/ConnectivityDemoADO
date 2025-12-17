@@ -54,8 +54,7 @@ namespace ConnectivityDemoADO
                 cn.Dispose();
             }
             return deptlist;
-        
-        
+              
         }
 
         public Dept FindDept(int dno)
