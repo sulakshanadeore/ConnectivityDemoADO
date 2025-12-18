@@ -59,10 +59,11 @@ namespace ConnectivityDemoADO
             {
                 if (found != null)
                 {
-                    found.Delete();
+                    found.Delete();//from dt
 
                     SqlCommandBuilder builder = new SqlCommandBuilder(da);
                     da.Update(ds, "Emp");
+
                     status = true;
                 }
             }
@@ -101,7 +102,8 @@ namespace ConnectivityDemoADO
 
         }
 
-        public List<Emp> ShowEmpList() {
+        public List<Emp> ShowEmpList() 
+        {
             DataTable dt=ds.Tables["Emp"];
             List<Emp> AllEmpdata = dt.AsEnumerable().Select(row=>new Emp
                 {
@@ -116,7 +118,10 @@ namespace ConnectivityDemoADO
 
         public Emp FindEmployee(int empid) 
         {
-            DataRow found = ds.Tables["Emp"].Rows.Find(empid);
+            //    DataRow found = ds.Tables["Emp"].Rows.Find(empid);
+            DataTable dt=ds.Tables["Emp"];
+            var data = dt.AsEnumerable().ToList();
+            var found=data.Where(d => d.Field<int>("EmployeeId").Equals(empid)).SingleOrDefault();
             Emp emp = new Emp();
             if (found != null)
             {

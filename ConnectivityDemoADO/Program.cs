@@ -115,7 +115,7 @@ internal class Program
     private static void ConnectedDemo()
     {
         Console.WriteLine("---DeptMenu----");
-        Console.WriteLine("1.Insert \n2.Update \n4.Find  \n5.ShowList \n6.OrderList of Customers \n8.Exit");
+        Console.WriteLine("1.Insert \n2.Update \n4.Find  \n5.ShowList \n6.OrderList of Customers \n7.Show HighValueOrder \n8.Exit");
         Console.WriteLine("Enter choice between 1 to 5, 8 to Exit..");
         int userchoice = Convert.ToInt32(Console.ReadLine());
         DepartmentOperations operations = new DepartmentOperations();
@@ -213,6 +213,15 @@ internal class Program
 
                 break;
 
+            case 7:
+                OrderDetailsOperations od = new OrderDetailsOperations();
+                List<HigherOrderValues> orderlist=od.GetAllHighOrders();
+                foreach (var item in orderlist)
+                {
+                    Console.WriteLine($"{item.Orderid} | {item.OrderValue}");
+                }
+
+                break;
             case 8:
                 Environment.Exit(1);
                 break;

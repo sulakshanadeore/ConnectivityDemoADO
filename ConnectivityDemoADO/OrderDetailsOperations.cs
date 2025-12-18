@@ -1,7 +1,10 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Identity.Client.AuthScheme.PoP;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +12,12 @@ using System.Threading.Tasks;
 namespace ConnectivityDemoADO
 {
 
+    internal class HigherOrderValues
+    {
+        public int Orderid { get; set; }
+        public double OrderValue { get; set; }
+
+    }
     internal class OrderDetails
     {
 
@@ -28,6 +37,37 @@ namespace ConnectivityDemoADO
             AddJsonFile("appsettings.json").Build();
             cnstring = config.GetConnectionString("NorthwindCnString");
         }
+
+
+
+        public List<HigherOrderValues> GetAllHighOrders()
+        {
+            SqlConnection cn = new SqlConnection(cnstring);
+            SqlCommand cmd = new SqlCommand("sp_HigherValueOrdersThanAvgValueOrders", cn);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cn.Open();
+            SqlDataReader dr=cmd.ExecuteReader();
+            List<HigherOrderValues> orderslist = new List<HigherOrderValues>();
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+                    HigherOrderValues obj = new HigherOrderValues();
+                    obj.Orderid = Convert.ToInt32(dr["orderid"]);
+                    obj.OrderValue = Convert.ToDouble(dr["value"]);
+                       orderslist.Add(obj);  
+                }
+
+            }
+
+            cn.Close();
+            cn.Dispose();
+                return orderslist;  
+
+        }
+
+
+
         public List<OrderDetails> ShowCustomerOrders(string custid)
         { 
             string query= "select od.orderid,orderdate,productid,CustomerID,Discount from[Order Details]  as od join orders as o on od.orderid = o.orderid and CustomerID = @customerid";
@@ -37,6 +77,8 @@ namespace ConnectivityDemoADO
             cn.Open();
             cmd.Parameters.AddWithValue("@customerid", custid);
             SqlDataReader dr=cmd.ExecuteReader();
+
+           
            
             List<OrderDetails> orderdetails = new List<OrderDetails>();
 
