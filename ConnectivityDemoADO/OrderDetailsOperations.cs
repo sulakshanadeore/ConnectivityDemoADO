@@ -67,20 +67,46 @@ namespace ConnectivityDemoADO
         }
 
 
+        public int GetOrderCount(string custid)
+        {
+            SqlConnection cn = new SqlConnection(cnstring);
+            SqlCommand cmd = new SqlCommand("sp_GetOrderCount", cn);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                     
+            cmd.Parameters.AddWithValue("@custid", custid);
+            //SqlParameter p1 = new SqlParameter("@orderCount",System.Data.SqlDbType.Int);
 
+            SqlParameter p1 = new SqlParameter();
+            p1.ParameterName = "@orderCount";
+            p1.SqlDbType = System.Data.SqlDbType.Int;
+                            
+            p1.Direction = System.Data.ParameterDirection.Output;
+            cmd.Parameters.Add(p1);
+            cn.Open();
+            cmd.ExecuteNonQuery();
+            int cnt = 0;
+
+            cnt=Convert.ToInt32(cmd.Parameters["@orderCount"].Value);
+              cn.Close();
+            cn.Dispose();
+            return cnt;
+        }
         public List<OrderDetails> ShowCustomerOrders(string custid)
         { 
-            string query= "select od.orderid,orderdate,productid,CustomerID,Discount from[Order Details]  as od join orders as o on od.orderid = o.orderid and CustomerID = @customerid";
+        //    string query= "select od.orderid,orderdate,productid,CustomerID,Discount from[Order Details]  as od join orders as o on od.orderid = o.orderid and CustomerID = @customerid";
 
             SqlConnection cn = new SqlConnection(cnstring);
-            SqlCommand cmd=new SqlCommand(query,cn);
-            cn.Open();
+            SqlCommand cmd = new SqlCommand("sp_CustOrders", cn);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+           
+        //    SqlCommand cmd=new SqlCommand(query,cn);
+           cn.Open();
             cmd.Parameters.AddWithValue("@customerid", custid);
             SqlDataReader dr=cmd.ExecuteReader();
 
-           
-           
-            List<OrderDetails> orderdetails = new List<OrderDetails>();
+
+
+            List <OrderDetails> orderdetails = new List<OrderDetails>();
 
             if (dr.HasRows)
             {

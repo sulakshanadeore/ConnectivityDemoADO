@@ -115,13 +115,21 @@ internal class Program
     private static void ConnectedDemo()
     {
         Console.WriteLine("---DeptMenu----");
-        Console.WriteLine("1.Insert \n2.Update \n4.Find  \n5.ShowList \n6.OrderList of Customers \n7.Show HighValueOrder \n8.Exit");
-        Console.WriteLine("Enter choice between 1 to 5, 8 to Exit..");
+        Console.WriteLine("1.Insert \n2.Update \n4.Find  \n5.ShowList \n6.OrderList of Customers \n7.Show HighValueOrder \n8.Exit \n9.OrderCount");
+        Console.WriteLine("Enter choice between 1 to 9, 8 to Exit..");
         int userchoice = Convert.ToInt32(Console.ReadLine());
         DepartmentOperations operations = new DepartmentOperations();
         Dept d = new Dept();
         switch (userchoice)
         {
+            case 9:
+                Console.WriteLine("Enter customed id");
+                string id = Console.ReadLine();
+                OrderDetailsOperations o1 = new OrderDetailsOperations();
+                int cnt=o1.GetOrderCount(id);
+                Console.WriteLine($"Total Orders for {id}={cnt}");
+                break;
+
             case 1:
                 Console.WriteLine("Enter Dept Name");
                 d.Dname = Console.ReadLine();
